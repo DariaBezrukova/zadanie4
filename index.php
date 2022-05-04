@@ -1,10 +1,7 @@
 <?php
-// Отправляем браузеру правильную кодировку,
-// файл index.php должен быть в кодировке UTF-8 без BOM.
+
 header('Content-Type: text/html; charset=UTF-8');
 
-// В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
-// и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $messages = array();
   if (!empty($_COOKIE['save'])) {
@@ -58,9 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('form.php');
 }
 else{
-// Проверяем ошибки.
+
 $errors = FALSE;
-//проверка имени
+
 if (empty($_POST['fio'])) {
   setcookie('fio_error', '1', time() + 24 * 60 * 60);
   setcookie('fio_value', '', 100000);
@@ -70,7 +67,7 @@ else {
   setcookie('fio_value', $_POST['fio'], time() + 12*30 * 24 * 60 * 60);
   setcookie('fio_error','',100000);
 }
-//проверка почты
+
 if (empty($_POST['mail']) or !filter_var($_POST['mail'],FILTER_VALIDATE_EMAIL)) {
   setcookie('mail_error', '1', time() + 24 * 60 * 60);
   setcookie('mail_value', '', 100000);
@@ -80,7 +77,7 @@ else {
   setcookie('mail_value', $_POST['mail'], time() + 12*30 * 24 * 60 * 60);
   setcookie('mail_error','',100000);
 }
-//проверка года
+
 if ($_POST['year']=='Выбрать') {
   setcookie('year_error', '1', time() + 24 * 60 * 60);
   setcookie('year_value', '', 100000);
@@ -100,7 +97,7 @@ else {
   setcookie('sex_value', $_POST['sex'], time() + 12*30 * 24 * 60 * 60);
   setcookie('sex_error','',100000);
 }
-//проверка конечностей
+
 if (!isset($_POST['limb'])) {
   setcookie('limb_error', '1', time() + 24 * 60 * 60);
   setcookie('limb_value', '', 100000);
@@ -110,7 +107,7 @@ else {
   setcookie('limb_value', $_POST['limb'], time() + 12*30 * 24 * 60 * 60);
   setcookie('limb_error','',100000);
 }
-//проверка суперспособностей
+
 if (!isset($_POST['power'])) {
   setcookie('powers_error', '1', time() + 24 * 60 * 60);
   setcookie('immortal_value', '', 100000);
@@ -136,9 +133,9 @@ else {
     }
   }
 }
-//запись куки для биографии
+
 setcookie('bio_value',$_POST['bio'],time()+ 12*30*24*60*60);
-//проверка согласия с политикой конфиденциальности
+
 if(!isset($_POST['priv'])){
   setcookie('privacy_error','1',time()+ 24*60*60);
   setcookie('privacy_value', '', 100000);
@@ -164,11 +161,11 @@ else {
   setcookie('privacy_error', '', 100000);
 }
 
-// Сохранение в базу данных.
 
-$user = 'u47502';
-$pass = '8701243';
-$db = new PDO('mysql:host=localhost;dbname=u47502', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
+
+$user = 'u47528';
+$pass = '9694962';
+$db = new PDO('mysql:host=localhost;dbname=u47528', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 
 try {
   $stmt = $db->prepare("INSERT INTO application SET name=:name,mail=:mail,date=:date,sex=:sex,limb=:limb,bio=:bio");
@@ -191,9 +188,8 @@ catch(PDOException $e){
   print('Error : ' . $e->getMessage());
   exit();
 }
-// Сохраняем куку с признаком успешного сохранения.
 setcookie('save', '1');
 
-// Делаем перенаправление.
+
 header('Location: index.php');
 }
